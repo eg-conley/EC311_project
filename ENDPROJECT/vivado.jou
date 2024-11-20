@@ -24,3 +24,7 @@
 start_gui
 open_project X:/Documents/311Labs/EC311_project/ENDPROJECT/ENDPROJECT.xpr
 update_compile_order -fileset sources_1
+close [ open X:/Documents/311Labs/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/letterInput.v w ]
+add_files X:/Documents/311Labs/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/letterInput.v
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
