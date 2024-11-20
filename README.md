@@ -1,1 +1,1 @@
-# EC311_project
+# EC311 Morse Code Detector
