@@ -1,0 +1,6 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/nstrahs/Downloads/debouncer.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module debouncer
+INFO: [VRFC 10-2263] Analyzing Verilog file "X:/Documents/311Labs/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/morseInput.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module morseInput
+INFO: [VRFC 10-2263] Analyzing Verilog file "X:/Documents/311Labs/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sim_1/new/morseInput_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module morseInput_tb
