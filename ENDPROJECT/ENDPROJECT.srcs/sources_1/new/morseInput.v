@@ -21,22 +21,23 @@
 
 // the goal of this module is to recieve the button inputs and ouput the morse code
 module morseInput(
-    input dot, dash, clk, reset,
+    input clk, reset, dot, dash,
     output reg [8:0] morseLetter
     );
     
     // defining all the possible FSM state
-    localparam IDLE = 2'b00, BUILDING = 2'b01, DONE = 2'b10;
+    localparam IDLE = 2'b00, BUILDING = 2'b01;
     
     reg [4:0] timeSinceLastPress;
     // build the word before outputing
     reg [5:0] tempLetter;
-    reg [5:0] clkCounter;
+    // total number of clk cycles
+    reg [99:0] clkCounter;
+    // keep track of length of the word for metadata
     reg [2:0] wordLen;
-
     reg [1:0] currState, nextState;
     
-    //TODO: NEED TO CALL DEBOUNCER FOR THE BUTTONS
+    // call debouncer for buttons
     wire cleanDot, cleanDash;
     debouncer deb(clk, dot, cleanDot);
     debouncer deb2(clk, dash, cleanDash);
@@ -45,84 +46,74 @@ module morseInput(
         currState = IDLE;
         nextState = IDLE;
         wordLen = 3'b0;
-        clkCounter = 6'b0;
+        clkCounter = 100'b0;
         timeSinceLastPress = 5'b0;
         tempLetter = 6'b0;
+        morseLetter = 9'b0;
     end
     
     always @(posedge clk or posedge reset) begin
         if (reset) begin
-            currState <= IDLE;
+            currState = IDLE;
             wordLen = 3'b0;
-            clkCounter = 6'b0;
+            clkCounter = 100'b0;
             timeSinceLastPress = 5'b0;
             tempLetter = 6'b0;
         end
-        else 
+        else
             currState <= nextState;
-            clkCounter = clkCounter + 1;
+    end
+    
+    always @(posedge clk) begin
+        timeSinceLastPress <= timeSinceLastPress + 1;
+        clkCounter <= clkCounter + 1;
+        
+        if (timeSinceLastPress > 10 || (wordLen == 3'b0 && clkCounter > 7)) begin
+            morseLetter = {wordLen, tempLetter};
+            nextState <= IDLE;
+        end
     end
     
     
     always @(posedge cleanDot or posedge cleanDash) begin
         case(currState)
             IDLE: begin
+                wordLen = 3'b0;
+                tempLetter = 6'b0;
+                clkCounter = 100'b0;
+                timeSinceLastPress = 5'b0;
                 if(cleanDot) begin
-                    tempLetter <= tempLetter << 1;
-                    wordLen <= wordLen + 1;
+                    tempLetter = tempLetter << 1; // bit shift with 0 to represent dot
+                    wordLen = 3'b001;
                     nextState <= BUILDING;
+                    timeSinceLastPress <= 0; // record a press
                 end
                 else if (cleanDash) begin
-                    tempLetter[0] <= 1;
-                    tempLetter <= tempLetter << 1;
-                    wordLen <= wordLen + 1;
+                    tempLetter[0] <= 1; // set to one and bitshift to represent dash
+                    tempLetter = tempLetter << 1;
+                    wordLen = 3'b001;
                     nextState <= BUILDING;
+                    timeSinceLastPress <= 0;
                 end
-                
                 
             end
             BUILDING: begin
                 if(cleanDot) begin
-                    tempLetter <= tempLetter << 1;
+                    tempLetter = tempLetter << 1;
                     wordLen <= wordLen + 1;
                     timeSinceLastPress <= 0;
                 end
                 else if (cleanDash) begin
-                    tempLetter[0] = 1;
-                    tempLetter <= tempLetter << 1;
+                    tempLetter[0] <= 1;
                     wordLen <= wordLen + 1;
                     timeSinceLastPress <= 0;
-                end
-                else if (~cleanDash && ~cleanDot) begin
-                    timeSinceLastPress <= timeSinceLastPress + 1;
+                    tempLetter = tempLetter << 1;
                 end
                 
-                // check if we are at the end of the letter or we are at the end of the word
-                if (timeSinceLastPress > 3 || (wordLen == 3'b0 && clkCounter > 7)) begin
-                    nextState <= DONE;
-                end else begin
-                    nextState <= BUILDING;
-                end
+                nextState <= BUILDING;
                 
-            end
-            DONE: begin
-                tempLetter <= tempLetter >> 1;
-                morseLetter = {wordLen, tempLetter};
-                wordLen = 3'b0;
-                clkCounter = 6'b0;
-                timeSinceLastPress = 5'b0;
-                tempLetter = 6'b0;
-                nextState <= IDLE;
             end
         endcase
     end
-    
-    
-    
-    
-    
-    
-    
-       
     
 endmodule
