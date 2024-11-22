@@ -37,6 +37,10 @@ module morseInput(
     reg [2:0] wordLen;
     reg [1:0] currState, nextState;
     
+    wire newClk;
+    assign newClk = clk;
+    //clk_divider c(clk, reset, newClk);
+    
     // call debouncer for buttons
     wire cleanDot, cleanDash;
     debouncer deb(clk, dot, cleanDot);
@@ -52,7 +56,7 @@ module morseInput(
         morseLetter = 9'b0;
     end
     
-    always @(posedge clk or posedge reset) begin
+    always @(posedge newClk or posedge reset) begin
         if (reset) begin
             currState = IDLE;
             wordLen = 3'b0;
@@ -64,18 +68,18 @@ module morseInput(
             currState <= nextState;
     end
     
-    always @(posedge clk) begin
+    always @(posedge newClk) begin
         timeSinceLastPress <= timeSinceLastPress + 1;
         clkCounter <= clkCounter + 1;
         
-        if (timeSinceLastPress > 10 || (wordLen == 3'b0 && clkCounter > 7)) begin
+        if (timeSinceLastPress > 10 || (wordLen == 3'b0 && clkCounter > 20)) begin
             morseLetter = {wordLen, tempLetter};
             nextState <= IDLE;
         end
     end
     
     
-    always @(posedge cleanDot or posedge cleanDash) begin
+    always @(posedge newClk) begin
         case(currState)
             IDLE: begin
                 wordLen = 3'b0;
@@ -95,6 +99,8 @@ module morseInput(
                     nextState <= BUILDING;
                     timeSinceLastPress <= 0;
                 end
+                else
+                    nextState <= IDLE;
                 
             end
             BUILDING: begin

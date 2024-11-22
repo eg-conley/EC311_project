@@ -26,3 +26,56 @@ open_project X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.xpr
 update_compile_order -fileset sources_1
 import_files C:/Users/nstrahs/Downloads/clk_divider.v
 import_files C:/Users/nstrahs/Downloads/debouncer.v
+file mkdir X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.srcs/constrs_1
+file mkdir X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.srcs/constrs_1/new
+close [ open X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.srcs/constrs_1/new/constraints.xdc w ]
+add_files -fileset constrs_1 X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.srcs/constrs_1/new/constraints.xdc
+open_hw_manager
+connect_hw_server -allow_non_jtag
+open_hw_target
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top morseInput [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+open_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1/morseInput.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1/morseInput.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1/morseInput.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+launch_simulation
+source morseInput_tb.tcl
+update_compile_order -fileset sources_1
+relaunch_sim
+relaunch_sim
+relaunch_sim

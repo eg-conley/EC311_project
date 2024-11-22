@@ -38,7 +38,7 @@ module debouncer(
         if(cleanpush) begin
             counter = 100'b0;
         end
-        else if (counter == 500)begin
+        else if (counter == 5)begin
             cleanpush <= 1;
         end
         else begin

@@ -1,40 +1,35 @@
 `timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+
+// Module Name:    clk_divider
+
+//////////////////////////////////////////////////////////////////////////////////
+module clk_divider(
+input clk_in,
+input rst,
+output reg divided_clk
+    );
 
 
-// CLK DIVIDER FROM 100MHz -> 25 MHz
+reg [49:0] toggle_value = 50'd25999999999 ; //((original/goal)/2) - 1 = 50*10^10 - 1 
+reg[32:0] cnt;
 
-module clk_divider(clk, reset, newClk);
-    
-    input clk, reset;
-    output newClk;
-    
-    reg [1:0] cnt = 0;
-    reg toggleVal = 1;
-    reg tempClk = 0;
-    
-    assign newClk = tempClk;
-    
-    always@(posedge clk)
-    begin        
-        if(reset)
-        begin
-            cnt <=0;
-            tempClk <= 0;
+always@(posedge clk_in or posedge rst)
+    begin
+        if (rst==1) begin
+            cnt <= 0;
+            divided_clk <= 0;
         end
-        else
-        begin
-            if(cnt < toggleVal)
-                cnt = cnt + 1;
-            else
-            begin
-                cnt <= 0;
-                tempClk = ~tempClk;
-            end
-            
-       end
-             
-    
+    else begin
+        if (cnt==toggle_value) begin
+            cnt <= 0;
+            divided_clk <= ~divided_clk;
+        end
+        else begin
+            cnt <= cnt +1;
+            divided_clk <= divided_clk;
+        end
     end
-    
-
+end
+ 
 endmodule
