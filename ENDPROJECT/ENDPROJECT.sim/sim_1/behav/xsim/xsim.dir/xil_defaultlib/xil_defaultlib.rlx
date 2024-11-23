@@ -2,7 +2,9 @@
 2020.2
 May 22 2024
 19:03:11
-C:/Users/nstrahs/Downloads/debouncer.v,1732232845,verilog,,X:/Documents/311Labs/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/morseInput.v,,debouncer,,,,,,,,
-X:/Documents/311Labs/EC311_project/ENDPROJECT/ENDPROJECT.sim/sim_1/behav/xsim/glbl.v,1708598507,verilog,,,,glbl,,,,,,,,
-X:/Documents/311Labs/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sim_1/new/morseInput_tb.v,1732237120,verilog,,,,morseInput_tb,,,,,,,,
-X:/Documents/311Labs/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/morseInput.v,1732237933,verilog,,X:/Documents/311Labs/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sim_1/new/morseInput_tb.v,,morseInput,,,,,,,,
+X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.sim/sim_1/behav/xsim/glbl.v,1732242662,verilog,,,,glbl,,,,,,,,
+X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sim_1/new/morseInput_tb.v,1732320116,verilog,,,,morseInput_tb,,,,,,,,
+X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/debouncer.v,1732242662,verilog,,X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/morseInput.v,,debouncer,,,,,,,,
+X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/morseInput.v,1732328589,verilog,,X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sim_1/new/morseInput_tb.v,,morseInput,,,,,,,,
+X:/EC311/lab3/lab3.srcs/sim_1/new/deb_tb.v,1731690828,verilog,,,,deb_tb,,,,,,,,
+X:/EC311/lab3/lab3.srcs/sources_1/new/deb.v,1732327761,verilog,,X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/morseInput.v,,deb,,,,,,,,

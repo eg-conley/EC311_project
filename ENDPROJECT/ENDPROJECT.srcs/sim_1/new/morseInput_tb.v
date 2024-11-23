@@ -20,11 +20,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module morseInput_tb(
-
     );
-    
     reg clk, reset, dot, dash;
-    wire [8:0] letterOut;
+    wire [7:0] letterOut;
     
     morseInput mor(clk, reset, dot, dash, letterOut);
     

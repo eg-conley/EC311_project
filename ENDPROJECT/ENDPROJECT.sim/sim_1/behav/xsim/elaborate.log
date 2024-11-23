@@ -9,7 +9,7 @@ Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.debouncer
+Compiling module xil_defaultlib.deb
 Compiling module xil_defaultlib.morseInput
 Compiling module xil_defaultlib.morseInput_tb
 Compiling module xil_defaultlib.glbl

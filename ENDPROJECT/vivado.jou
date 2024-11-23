@@ -3,26 +3,274 @@
 # SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Thu Nov 21 21:31:13 2024
-# Process ID: 14068
+# Start of session at: Fri Nov 22 18:30:14 2024
+# Process ID: 3560
 # Current directory: X:/EC311/EC311_project/ENDPROJECT
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent18124 X:\EC311\EC311_project\ENDPROJECT\ENDPROJECT.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent9940 X:\EC311\EC311_project\ENDPROJECT\ENDPROJECT.xpr
 # Log file: X:/EC311/EC311_project/ENDPROJECT/vivado.log
 # Journal file: X:/EC311/EC311_project/ENDPROJECT\vivado.jou
-# Running On        :ECE-PHO115-09
+# Running On        :ECE-PHO115-10
 # Platform          :Windows Server 2016 or Windows 10
 # Operating System  :19045
 # Processor Detail  :12th Gen Intel(R) Core(TM) i7-12700K
 # CPU Frequency     :3610 MHz
 # CPU Physical cores:12
 # CPU Logical cores :20
-# Host memory       :16861 MB
+# Host memory       :16853 MB
 # Swap memory       :2550 MB
-# Total Virtual     :19412 MB
-# Available Virtual :8083 MB
+# Total Virtual     :19403 MB
+# Available Virtual :9762 MB
 #-----------------------------------------------------------
 start_gui
 open_project X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.xpr
 update_compile_order -fileset sources_1
-add_files -norecurse {X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/vga_controller.v X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/letterInput.v X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/clk_divider.v X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/debouncer.v X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/vga_top.v X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/morseInput.v}
+launch_simulation
+launch_simulation
+source morseInput_tb.tcl
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top morseInput [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
 update_compile_order -fileset sources_1
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+update_compile_order -fileset sources_1
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close [ open X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/letterInput_tb.v w ]
+add_files X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/letterInput_tb.v
+update_compile_order -fileset sources_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top letterInput_tb [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top letterInput_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+update_compile_order -fileset sim_1
+launch_simulation
+close_sim
+launch_simulation
+launch_simulation
+source letterInput_tb.tcl
+close_sim
+launch_simulation
+launch_simulation
+launch_simulation
+launch_simulation
+launch_simulation
+source letterInput_tb.tcl
+close_sim
+launch_simulation
+launch_simulation
+launch_simulation
+source letterInput_tb.tcl
+close_sim
+launch_simulation
+source letterInput_tb.tcl
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top morseInput_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+export_ip_user_files -of_objects  [get_files X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/letterInput_tb.v] -no_script -reset -force -quiet
+remove_files  X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/letterInput_tb.v
+export_ip_user_files -of_objects  [get_files X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/letterInput.v] -no_script -reset -force -quiet
+remove_files  X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/letterInput.v
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+add_files -norecurse X:/EC311/lab3/lab3.srcs/sources_1/new/deb.v
+update_compile_order -fileset sources_1
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+add_files -fileset sim_1 -norecurse X:/EC311/lab3/lab3.srcs/sim_1/new/deb_tb.v
+update_compile_order -fileset sim_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top deb_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+close_sim
+launch_simulation
+source deb_tb.tcl
+add_files -fileset constrs_1 -norecurse X:/EC311/EC311_project/ENDPROJECT/Nexys4DDR_Master.xdc
+export_ip_user_files -of_objects  [get_files X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/debouncer.v] -no_script -reset -force -quiet
+remove_files  X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.srcs/sources_1/new/debouncer.v
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top morseInput_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top morseInput [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+launch_simulation
+close_sim
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+open_run impl_1
+open_hw_manager
+connect_hw_server -allow_non_jtag
+open_hw_target
+set_property PROGRAM.FILE {X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1/morseInput.bit} [get_hw_devices xc7a100t_0]
+current_hw_device [get_hw_devices xc7a100t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7a100t_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1/morseInput.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top deb_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+launch_simulation
+launch_simulation -mode post-synthesis -type functional
+launch_simulation
+close_sim
+launch_simulation
+source deb_tb.tcl
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top morseInput_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+reset_run synth_1
+launch_runs synth_1 -jobs 10
+wait_on_run synth_1
+close_sim
+launch_simulation
+close_design
+update_compile_order -fileset sources_1
+launch_simulation
+launch_runs impl_1 -jobs 10
+wait_on_run impl_1
+close_design
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+update_compile_order -fileset sources_1
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+open_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {X:/EC311/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1/morseInput.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+close_sim
+launch_simulation
+source morseInput_tb.tcl
+close_sim
+launch_simulation
+source morseInput_tb.tcl
