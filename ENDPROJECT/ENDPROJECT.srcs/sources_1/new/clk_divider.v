@@ -1,35 +1,24 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
 
-// Module Name:    clk_divider
 
-//////////////////////////////////////////////////////////////////////////////////
+// CLK DIVIDER FROM 100MHz -> 25 MHz
 module clk_divider(
-input clk_in,
-input rst,
-output reg divided_clk
-    );
+    input clk,            // 100 MHz clock input
+    input reset,          // Reset signal
+    output reg clk_out    // 25 MHz clock output
+);
+    reg [1:0] counter;    // 2-bit counter to divide by 4
 
-
-reg [49:0] toggle_value = 50'd25999999999 ; //((original/goal)/2) - 1 = 50*10^10 - 1 
-reg[32:0] cnt;
-
-always@(posedge clk_in or posedge rst)
-    begin
-        if (rst==1) begin
-            cnt <= 0;
-            divided_clk <= 0;
-        end
-    else begin
-        if (cnt==toggle_value) begin
-            cnt <= 0;
-            divided_clk <= ~divided_clk;
-        end
-        else begin
-            cnt <= cnt +1;
-            divided_clk <= divided_clk;
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            counter <= 2'b00;
+            clk_out <= 0;
+        end else begin
+            counter <= counter + 1;
+            if (counter == 2'b11) begin
+                clk_out <= ~clk_out;  // Toggle output clock every 4 clock cycles
+            end
         end
     end
-end
- 
 endmodule
+

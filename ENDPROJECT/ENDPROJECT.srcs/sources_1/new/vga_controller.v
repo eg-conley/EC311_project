@@ -1,125 +1,76 @@
 `timescale 1ns / 1ps
 
-module vga_controller(clk, letterIn, h_sync, v_sync, led_on, letterToScreen);
-    
-    input clk, letterIn;
-    output reg h_sync, v_sync, led_on, letterToScreen;
-    
-    localparam TOTAL_WIDTH = 800;
-    localparam TOTAL_HEIGHT = 525;
-    localparam ACTIVE_WIDTH = 640;
-    localparam ACTIVE_HEIGHT = 480;
-    localparam H_SYNC_COLUMN = 704;
-    localparam V_SYNC_LINE = 523;
-    
-    reg [11:0] widthPos = 0;
-    reg [11:0] heightPos = 0;
-    
-    
-    wire enable = ((widthPos >=50 & widthPos < 690) & (heightPos >=33 & heightPos < 513)) ? 1'b1: 1'b0; // background
-    
-    // Following always block ensures that 
-    // you go through all pixel coordinates
-    always@(posedge clk)
-    begin
-        // check if end of the width 
-        if(widthPos < TOTAL_WIDTH -1)
-        begin 
-            widthPos <= widthPos + 1;
-        end
-        else
-        begin
-            // move back to the first column
-            widthPos <=0;
-            // check if end of the height
-            if(heightPos < TOTAL_HEIGHT -1)
-            begin
-                heightPos <= heightPos + 1;
-            end
+module vga_controller(
+    input clk,               // 25 MHz clock (or higher)
+    input reset,             // Reset signal
+    output reg [9:0] x,      // Current pixel X position (0-639)
+    output reg [9:0] y,      // Current pixel Y position (0-479)
+    output reg hsync,        // Horizontal Sync signal
+    output reg vsync,        // Vertical Sync signal
+    output reg video_on      // Video signal indicating if the pixel is within visible area
+);
+    // VGA 640x480 60Hz timing parameters
+    parameter H_SYNC_CYCLES = 96;
+    parameter H_BACK_PORCH = 48;
+    parameter H_ACTIVE_VIDEO = 640;
+    parameter H_FRONT_PORCH = 16;
+    parameter H_TOTAL_CYCLES = 800;
+
+    parameter V_SYNC_CYCLES = 2;
+    parameter V_BACK_PORCH = 33;
+    parameter V_ACTIVE_VIDEO = 480;
+    parameter V_FRONT_PORCH = 10;
+    parameter V_TOTAL_CYCLES = 525;
+
+    reg [9:0] h_count;
+    reg [9:0] v_count;
+
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            h_count <= 0;
+            v_count <= 0;
+            x <= 0;
+            y <= 0;
+            hsync <= 0;
+            vsync <= 0;
+            video_on <= 0;
+        end else begin
+            // Horizontal counter
+            if (h_count < H_TOTAL_CYCLES - 1)
+                h_count <= h_count + 1;
             else
-            begin
-                 heightPos <= 0;
-            end       
+                h_count <= 0;
+
+            // Vertical counter
+            if (h_count == H_TOTAL_CYCLES - 1) begin
+                if (v_count < V_TOTAL_CYCLES - 1)
+                    v_count <= v_count + 1;
+                else
+                    v_count <= 0;
+            end
+
+            // Generate hsync, vsync, and video_on signals
+            if (h_count < H_SYNC_CYCLES)
+                hsync <= 0;
+            else
+                hsync <= 1;
+
+            if (v_count < V_SYNC_CYCLES)
+                vsync <= 0;
+            else
+                vsync <= 1;
+
+            // Video is on if within active video area
+            if (h_count >= (H_SYNC_CYCLES + H_BACK_PORCH) && h_count < (H_SYNC_CYCLES + H_BACK_PORCH + H_ACTIVE_VIDEO) &&
+                v_count >= (V_SYNC_CYCLES + V_BACK_PORCH) && v_count < (V_SYNC_CYCLES + V_BACK_PORCH + V_ACTIVE_VIDEO)) begin
+                video_on <= 1;
+                x <= h_count - (H_SYNC_CYCLES + H_BACK_PORCH);
+                y <= v_count - (V_SYNC_CYCLES + V_BACK_PORCH);
+            end else begin
+                video_on <= 0;
+                x <= 0;
+                y <= 0;
+            end
         end
     end
-    
-    // generate horizontal sync
-    always@(posedge clk)
-    begin
-        if (widthPos < H_SYNC_COLUMN)
-        begin
-            h_sync <= 1'b1;
-        end
-        else
-        begin
-            h_sync <= 1'b0;
-        end
-   end
-
-    // generates vertical sync
-    always@(posedge clk)
-    begin
-        if (heightPos < V_SYNC_LINE)
-        begin
-            v_sync <= 1'b1;
-        end
-        else
-        begin
-            v_sync <= 1'b0;
-        end
-   end
-    
-    // define all letters here:
-    
-    localparam I_X = 300;  // Starting X position (adjust to center)
-    localparam I_Y = 200;  // Starting Y position (adjust to center)
-    localparam I_Width = 10;  // Width of "I"
-    localparam I_Height = 40; // Height of "I"
-    
-    localparam T_X = 300;  // Starting X position (adjust to center)
-    localparam T_Y = 150;  // Starting Y position (adjust to center)
-    localparam T_Width = 5;  // Width of "T"
-    localparam T_Height = 7; // Height of "T"
-    
-    // main logic
-    always @(posedge clk) begin
-        if (enable) begin
-            case(letterIn)
-                "I": begin // turn on the pixels in I
-                    if (widthPos >= I_X && widthPos < (I_X + I_Width) && heightPos >= I_Y && heightPos < (I_Y + I_Height))
-                        led_on <= 1'b1; // turn on pixels in I
-                     else
-                        led_on <= 1'b0;
-                 end
-                 "T": begin
-                    if (widthPos >= T_X && widthPos < (T_X + T_Width) && heightPos >= T_Y && heightPos < (T_Y + T_Height) &&
-                    (heightPos - T_Y == 0) || (widthPos - T_X == 2) && (heightPos - T_Y >= 1 && heightPos - T_Y < T_Height) )
-                        led_on <= 1'b1; // turn on pixels in T
-                    else
-                        led_on <=1'b0; // turn off pixels outside of T
-                  end
-               endcase // of of case statement
-            end // end of if enabled
-         else // if enable is not true
-            led_on <= 1'b0; // no display at all
-   end
 endmodule
-
-
-
-
-    
-/*// this is you main logic based on 
-    // your project
-    always@(posedge clk)
-    begin
-        if(enable)
-        begin
-            led_on <= 1'b1;
-        end
-        else
-        begin
-            led_on <= 1'b0;
-        end 
-   end 
-endmodule */
