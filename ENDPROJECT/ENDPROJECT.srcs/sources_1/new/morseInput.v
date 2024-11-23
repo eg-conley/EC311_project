@@ -19,7 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-// the goal of this module is to recieve the button inputs and ouput the morse code
+// the goal of this module is to receive the button inputs and ouput the morse code
 module morseInput(
     input clk, reset, dot, dash,
     output reg [7:0] morseLetter
@@ -50,7 +50,7 @@ module morseInput(
         clkCounter = 100'b0;
         timeSinceLastPress = 5'b0;
         tempLetter = 6'b0;
-        morseLetter = 9'b0;
+        morseLetter = 8'b0;
     end
     
     // state transition logic
@@ -61,7 +61,7 @@ module morseInput(
             clkCounter = 100'b0;
             timeSinceLastPress = 5'b0;
             tempLetter = 6'b0;
-            morseLetter = 9'b0;
+            morseLetter = 8'b0;
         end
         else
             currState <= nextState;
@@ -120,9 +120,7 @@ module morseInput(
     end
   
     // if either button pushed, build sequence and decide outputs
-    always @ (posedge clk or posedge cleanDot or posedge cleanDash) begin
-        if ( cleanDot ||  cleanDash) begin
-    
+     always @ (posedge cleanDot or posedge cleanDash) begin // HAVE TO FIX THIS/RELATE TO CLOCK
         case(currState)
             IDLE: begin
                 wordLen = 3'b0;
@@ -161,7 +159,6 @@ module morseInput(
             end
             
         endcase
-      end // for if statement
     end
     
 endmodule

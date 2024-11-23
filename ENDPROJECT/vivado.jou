@@ -274,3 +274,12 @@ source morseInput_tb.tcl
 close_sim
 launch_simulation
 source morseInput_tb.tcl
+close_sim
+launch_simulation
+reset_run synth_1
+launch_simulation
+launch_simulation
+launch_simulation
+close_hw_manager
+launch_simulation
+source morseInput_tb.tcl
