@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:
+// Engineer:
+//
 // Create Date: 11/11/2024 11:43:19 AM
-// Design Name: 
+// Design Name:
 // Module Name: debouncer
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -27,24 +27,29 @@ module debouncer(
     output reg cleanpush
 
     );
-    
-    reg [99:0] counter;
-    
-    initial counter = 100'b0;
+   
+    reg [11:0] counter;
+   
+    initial counter = 12'b0;
     initial cleanpush = 0;
-    
-    always @(clk) begin
-    
-        if(cleanpush) begin
-            counter = 100'b0;
+   
+    always @(posedge clk) begin
+   
+        if(button == 0) begin
+            counter = 12'b0;
+            cleanpush = 0;
         end
-        else if (counter == 5)begin
+        if(cleanpush) begin
+            counter = 12'b0;
+        end
+        // change this to 500 before push to fpga
+        else if (counter >= 5)begin
             cleanpush <= 1;
         end
         else begin
             counter = counter + 1;
         end
-        
+       
     end
-    
+   
 endmodule
