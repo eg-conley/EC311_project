@@ -95,7 +95,46 @@ module clkIndMorseInput(
                     nextState <= BUILDING;
                 end
                 else if (cleanDone) begin // done with the letter
-                    morseLetter = {wordLen, tempLetter};
+                    case({wordLen, tempLetter})
+                        9'b111111111: morseLetter = " "; // ASCII 32
+                        9'b010000001: morseLetter = "a"; // ASCII 97
+                        9'b100001000: morseLetter = "b"; // ASCII 98
+                        9'b100001010: morseLetter = "c"; // ASCII 99
+                        9'b011000100: morseLetter = "d"; // ASCII 100
+                        9'b001000000: morseLetter = "e"; // ASCII 101
+                        9'b100000010: morseLetter = "f"; // ASCII 102
+                        9'b011000110: morseLetter = "g"; // ASCII 103
+                        9'b100000000: morseLetter = "h"; // ASCII 104
+                        9'b010000000: morseLetter = "i"; // ASCII 105
+                        9'b100000111: morseLetter = "j"; // ASCII 106
+                        9'b011000101: morseLetter = "k"; // ASCII 107
+                        9'b100000100: morseLetter = "l"; // ASCII 108
+                        9'b010000011: morseLetter = "m"; // ASCII 109
+                        9'b010000010: morseLetter = "n"; // ASCII 110
+                        9'b011000111: morseLetter = "o"; // ASCII 111
+                        9'b100000110: morseLetter = "p"; // ASCII 112
+                        9'b100001101: morseLetter = "q"; // ASCII 113
+                        9'b011000010: morseLetter = "r"; // ASCII 114
+                        9'b011000000: morseLetter = "s"; // ASCII 115
+                        9'b001000001: morseLetter = "t"; // ASCII 116
+                        9'b011000001: morseLetter = "u"; // ASCII 117
+                        9'b100000001: morseLetter = "v"; // ASCII 118
+                        9'b011000011: morseLetter = "w"; // ASCII 119
+                        9'b100001001: morseLetter = "x"; // ASCII 120
+                        9'b100001011: morseLetter = "y"; // ASCII 121
+                        9'b100001100: morseLetter = "z"; // ASCII 122
+                        9'b101001111: morseLetter = "1"; // ASCII 49
+                        9'b101000111: morseLetter = "2"; // ASCII 50
+                        9'b101000011: morseLetter = "3"; // ASCII 51
+                        9'b101000001: morseLetter = "4"; // ASCII 52
+                        9'b101000000: morseLetter = "5"; // ASCII 53
+                        9'b101010000: morseLetter = "6"; // ASCII 54
+                        9'b101011000: morseLetter = "7"; // ASCII 55
+                        9'b101011100: morseLetter = "8"; // ASCII 56
+                        9'b101011110: morseLetter = "9"; // ASCII 57
+                        9'b101011111: morseLetter = "0"; // ASCII 48
+                        default: morseLetter = " ";
+                    endcase 
                     nextState <= IDLE;
                 end
                 else begin
