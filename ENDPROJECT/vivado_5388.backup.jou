@@ -1,0 +1,81 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Fri Nov 22 13:27:50 2024
+# Process ID: 5388
+# Current directory: X:/Downloads/EC311_project/ENDPROJECT
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent8176 X:\Downloads\EC311_project\ENDPROJECT\ENDPROJECT.xpr
+# Log file: X:/Downloads/EC311_project/ENDPROJECT/vivado.log
+# Journal file: X:/Downloads/EC311_project/ENDPROJECT\vivado.jou
+# Running On        :ECE-PHO115-16
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :19045
+# Processor Detail  :12th Gen Intel(R) Core(TM) i7-12700K
+# CPU Frequency     :3610 MHz
+# CPU Physical cores:12
+# CPU Logical cores :20
+# Host memory       :16853 MB
+# Swap memory       :2550 MB
+# Total Virtual     :19403 MB
+# Available Virtual :9135 MB
+#-----------------------------------------------------------
+start_gui
+open_project X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.xpr
+update_compile_order -fileset sources_1
+import_files C:/Users/nstrahs/Downloads/clk_divider.v
+import_files C:/Users/nstrahs/Downloads/debouncer.v
+file mkdir X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.srcs/constrs_1
+file mkdir X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.srcs/constrs_1/new
+close [ open X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.srcs/constrs_1/new/constraints.xdc w ]
+add_files -fileset constrs_1 X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.srcs/constrs_1/new/constraints.xdc
+open_hw_manager
+connect_hw_server -allow_non_jtag
+open_hw_target
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top morseInput [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+open_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1/morseInput.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1/morseInput.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 10
+wait_on_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1/morseInput.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+launch_simulation
+source morseInput_tb.tcl
+update_compile_order -fileset sources_1
+relaunch_sim
+relaunch_sim
+relaunch_sim

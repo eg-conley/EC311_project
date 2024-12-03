@@ -3,13 +3,13 @@
 # SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Fri Nov 22 15:14:47 2024
-# Process ID: 16952
-# Current directory: X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1
-# Command line: vivado.exe -log morseInput.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source morseInput.tcl -notrace
-# Log file: X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1/morseInput.vdi
-# Journal file: X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1\vivado.jou
-# Running On        :ECE-PHO115-16
+# Start of session at: Mon Dec  2 22:14:56 2024
+# Process ID: 25552
+# Current directory: C:/Users/nstrahs/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1
+# Command line: vivado.exe -log morseTrie.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source morseTrie.tcl -notrace
+# Log file: C:/Users/nstrahs/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1/morseTrie.vdi
+# Journal file: C:/Users/nstrahs/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/impl_1\vivado.jou
+# Running On        :ECE-PHO115-03
 # Platform          :Windows Server 2016 or Windows 10
 # Operating System  :19045
 # Processor Detail  :12th Gen Intel(R) Core(TM) i7-12700K
@@ -17,8 +17,8 @@
 # CPU Physical cores:12
 # CPU Logical cores :20
 # Host memory       :16853 MB
-# Swap memory       :2550 MB
-# Total Virtual     :19403 MB
-# Available Virtual :4885 MB
+# Swap memory       :8637 MB
+# Total Virtual     :25491 MB
+# Available Virtual :5165 MB
 #-----------------------------------------------------------
-source morseInput.tcl -notrace
+source morseTrie.tcl -notrace

@@ -25,7 +25,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='X:/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/synth_1'
+HD_PWD='C:/Users/nstrahs/Downloads/EC311_project/ENDPROJECT/ENDPROJECT.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
@@ -41,4 +41,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log morseInput.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source morseInput.tcl
+EAStep vivado -log morseTrie.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source morseTrie.tcl

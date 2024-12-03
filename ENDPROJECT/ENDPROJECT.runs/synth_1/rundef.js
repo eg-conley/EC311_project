@@ -24,7 +24,7 @@ eval( EAInclude(ISEJScriptLib) );
 
 
 ISEStep( "vivado",
-         "-log morseInput.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source morseInput.tcl" );
+         "-log morseTrie.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source morseTrie.tcl" );
 
 
 
