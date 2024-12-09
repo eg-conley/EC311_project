@@ -1,27 +1,9 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 12/02/2024 08:58:47 PM
-// Design Name: 
-// Module Name: morseTrie
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
 
 module morseTrie(
     input clk, reset, dot, dash, done,
-    output reg [7:0] morseLetter
+    output reg [7:0] morseLetter,
+    output reg newLetter
     );
 
     reg [7:0] currLetter;
@@ -48,6 +30,7 @@ module morseTrie(
         else if (posEdgeDone) begin
             morseLetter = currLetter;
             currLetter = " ";
+            newLetter <= 1;
         end
         else if (posEdgeDash) begin
             case(currLetter)
@@ -84,6 +67,9 @@ module morseTrie(
                 "M": currLetter <= "G";
                 "G": currLetter <= "Z";
             endcase
+        end
+        else begin
+            newLetter <= 0;
         end
     end
 endmodule
