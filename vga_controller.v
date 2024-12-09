@@ -7,7 +7,7 @@ module vga_controller(
     output video_on,    // ON while pixel counts for x and y and within display area
     output hsync,       // horizontal sync
     output vsync,       // vertical sync
-    output tick,      // the 25MHz pixel/second rate signal, pixel tick
+    output clk_25MHz,      // the 25MHz pixel/second rate signal, pixel tick
     output [9:0] x,     // pixel count/position of pixel x, max 0-799
     output [9:0] y      // pixel count/position of pixel y, max 0-524
     );
@@ -97,6 +97,6 @@ module vga_controller(
     assign vsync = v_sync_reg;
     assign x = h_count_reg;
     assign y = v_count_reg;
-    assign tick = w_25MHz;
+    assign clk_25MHz = w_25MHz;
             
 endmodule
