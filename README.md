@@ -1,4 +1,4 @@
-# EC311 Morse Code Detector
+# EC311 Morse Code Escape Game
 **EC311**   
 **Group 4: Ella Conley, Siara Patel, Tyler Nguyen, Nathan Strahs**
 
@@ -12,7 +12,7 @@ This README provides an in-depth explanation of the provided verilog modules and
 4. Integration of Modules  
 5. References
 
-**Overview of Project:**
+**1. Overview of Project:**
 
 - Four switches are assigned to four different modes, with the start\_page\_display displaying this   
 - Switch 0 corresponds to practice mode from the practice\_display module   
@@ -25,14 +25,14 @@ This README provides an in-depth explanation of the provided verilog modules and
   - User has to input the sentence “The quick brown fox jumps over the lazy dog” with the same color error indications.   
 - Important Note: the user must reset the module after completing it. Additionally, after inputting all the correct letters, the user then clicks done to have the done page display.
 
-**Main Modes:** 
+**2. Main Modes:** 
 
 - Practice Mode  
 - Level 1   
 - Level 2   
 - Level 3  
 
-**Module Descriptions** 
+**3. Module Descriptions** 
 
 - fms\_top.v  
   - Contains a finite state machine for page/level displays.   
@@ -74,8 +74,8 @@ This README provides an in-depth explanation of the provided verilog modules and
 - debouncer.v  
   - Three debouncer modules.   
     - Outputs posedge and high button.   
-    - Posedge is only on for one clock cycle.   
--   
+    - Posedge is only on for one clock cycle.
+    
 - ascii\_test.v   
   - Letter stores the user input morse code and converts it into the equivalent ascii character (ascii\_char).
 
@@ -88,7 +88,7 @@ This README provides an in-depth explanation of the provided verilog modules and
   - Buttons → done, reset, dot, dash   
   - rgb \[0:11\]
 
-**Integration of the Modules:** 
+**4. Integration of the Modules:** 
 
 1. Top Module (fsm\_top.v) 
 
