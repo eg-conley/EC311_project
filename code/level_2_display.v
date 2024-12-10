@@ -7,63 +7,63 @@ module level_2_display(
     input video_on,
     input [9:0] x, y,
     input [7:0] letter,
-    input [7:0] counter,
-    output reg lvl_won,
+    input [7:0] counter, // number of total letters
+    output reg lvl_won, // win flag
     output reg [11:0] rgb
     );
     
-    // Declare variables
-    wire [10:0] rom_addr;
-    wire [6:0] ascii_char;
-    reg [3:0] char_row; // Row of the ASCII character in ROM
-    wire [2:0] bit_addr; // Column of the ASCII character in ROM
-    wire [7:0] rom_data; // Data from the ROM (character bits)
-    wire ascii_bit;      // The actual bit of the character
-    wire ascii_bit_on;   // Whether to display the bit or not
+    // declare variables
+    wire [10:0] rom_addr; // ASCII value + row
+    wire [6:0] ascii_char; // ASCII value (7 bit)
+    reg [3:0] char_row; // row of ASCII char in ROM
+    wire [2:0] bit_addr; // column of ASCII char in ROM
+    wire [7:0] rom_data; // data from the ROM
+    wire ascii_bit; // actual bit from ROM data
+    wire ascii_bit_on; // display bit or not
 
-    // Instantiate the ASCII ROM (assuming it's already defined)
+    // instantiate ASCII ROM
     ascii_rom rom(clk, rom_addr, rom_data);
+      
+    // assign the address to ROM (ASCII value + row)
+    assign rom_addr = {ascii_char, char_row};
+    assign ascii_bit = rom_data[~bit_addr]; // reverse bit order for the character
     
-    // Assign the address to the ROM (address = ASCII value + row)
-    assign rom_addr = {ascii_char, char_row};   // ROM address is ascii code + row
-    assign ascii_bit = rom_data[~bit_addr];     // Reverse bit order for the character
-    
-    // Hardcode the letter to display for level instructions
-
+    // level setup
     assign ascii_char = 
     // "LEVEL 2" at y = 152 to 168
-    ((x >= 296 && x < 304) && (y >= 152 && y < 168)) ? 7'h4c : 
-    ((x >= 304 && x < 312) && (y >= 152 && y < 168)) ? 7'h45 : 
-    ((x >= 312 && x < 320) && (y >= 152 && y < 168)) ? 7'h56 : 
-    ((x >= 320 && x < 328) && (y >= 152 && y < 168)) ? 7'h45 : 
-    ((x >= 328 && x < 336) && (y >= 152 && y < 168)) ? 7'h4c : 
-    ((x >= 336 && x < 344) && (y >= 152 && y < 168)) ? 7'h20 : 
-    ((x >= 344 && x < 352) && (y >= 152 && y < 168)) ? 7'h32 : 
+    ((x >= 296 && x < 304) && (y >= 152 && y < 168)) ? 7'h4c : // L
+    ((x >= 304 && x < 312) && (y >= 152 && y < 168)) ? 7'h45 : // E
+    ((x >= 312 && x < 320) && (y >= 152 && y < 168)) ? 7'h56 : // V
+    ((x >= 320 && x < 328) && (y >= 152 && y < 168)) ? 7'h45 : // E
+    ((x >= 328 && x < 336) && (y >= 152 && y < 168)) ? 7'h4c : // L
+    ((x >= 336 && x < 344) && (y >= 152 && y < 168)) ? 7'h20 : // space
+    ((x >= 344 && x < 352) && (y >= 152 && y < 168)) ? 7'h32 :  // 2
     
-    // "BU" 
-    ((x >= 280 && x < 288) && (y >= 216 && y < 232)) ? 7'h42 : 
-    ((x >= 288 && x < 296) && (y >= 216 && y < 232)) ? 7'h55 : 
-    ((x >= 296 && x < 304) && (y >= 216 && y < 232)) ? 7'h20 : 
+    // "BU" at y = 216 to 232
+    ((x >= 280 && x < 288) && (y >= 216 && y < 232)) ? 7'h42 : // B
+    ((x >= 288 && x < 296) && (y >= 216 && y < 232)) ? 7'h55 : // U
+    ((x >= 296 && x < 304) && (y >= 216 && y < 232)) ? 7'h20 : // space
     
-    // "ENGINEERING" 
-    ((x >= 304 && x < 312) && (y >= 216 && y < 232)) ? 7'h45 : 
-    ((x >= 312 && x < 320) && (y >= 216 && y < 232)) ? 7'h4e : 
-    ((x >= 320 && x < 328) && (y >= 216 && y < 232)) ? 7'h47 : 
-    ((x >= 328 && x < 336) && (y >= 216 && y < 232)) ? 7'h49 : 
+    // "ENGINEERING" at y = 216 to 232
+    ((x >= 304 && x < 312) && (y >= 216 && y < 232)) ? 7'h45 : // E
+    ((x >= 312 && x < 320) && (y >= 216 && y < 232)) ? 7'h4e : // N
+    ((x >= 320 && x < 328) && (y >= 216 && y < 232)) ? 7'h47 : // G
+    ((x >= 328 && x < 336) && (y >= 216 && y < 232)) ? 7'h49 : // I
     ((x >= 336 && x < 344) && (y >= 216 && y < 232)) ? 7'h4e : // N
-    ((x >= 344 && x < 352) && (y >= 216 && y < 232)) ? 7'h45 : 
-    ((x >= 352 && x < 360) && (y >= 216 && y < 232)) ? 7'h45 : 
-    ((x >= 360 && x < 368) && (y >= 216 && y < 232)) ? 7'h52 : 
-    ((x >= 368 && x < 376) && (y >= 216 && y < 232)) ? 7'h49 : 
-    ((x >= 376 && x < 384) && (y >= 216 && y < 232)) ? 7'h4e : 
-    ((x >= 384 && x < 392) && (y >= 216 && y < 232)) ? 7'h47 : 
+    ((x >= 344 && x < 352) && (y >= 216 && y < 232)) ? 7'h45 : // E
+    ((x >= 352 && x < 360) && (y >= 216 && y < 232)) ? 7'h45 : // E
+    ((x >= 360 && x < 368) && (y >= 216 && y < 232)) ? 7'h52 : // R
+    ((x >= 368 && x < 376) && (y >= 216 && y < 232)) ? 7'h49 : // I
+    ((x >= 376 && x < 384) && (y >= 216 && y < 232)) ? 7'h4e : // N
+    ((x >= 384 && x < 392) && (y >= 216 && y < 232)) ? 7'h47 : // G
 
-    
-    // "BU" 
+    // USER INPUT LINE
+    // "BU" at y = 232 to 248
     ((x >= 280 && x < 288) && (y >= 232 && y < 248)) ? 7'h42 : // B
     ((x >= 288 && x < 296) && (y >= 232 && y < 248)) ? 7'h55 : // U
     ((x >= 296 && x < 304) && (y >= 232 && y < 248)) ? 7'h20 : // space
-    // "ENGINEERING"
+    
+    // "ENGINEERING" y = 232 to 248
     ((x >= 304 && x < 312) && (y >= 232 && y < 248)) ? 7'h45 : // E
     ((x >= 312 && x < 320) && (y >= 232 && y < 248)) ? 7'h4e : // N
     ((x >= 320 && x < 328) && (y >= 232 && y < 248)) ? 7'h47 : // G
@@ -75,31 +75,33 @@ module level_2_display(
     ((x >= 368 && x < 376) && (y >= 232 && y < 248)) ? 7'h49 : // I
     ((x >= 376 && x < 384) && (y >= 232 && y < 248)) ? 7'h4e : // N
     ((x >= 384 && x < 392) && (y >= 232 && y < 248)) ? 7'h47 : // G
-    7'h00;
+    7'h00; // default (blank space)
 
-    // Assign the row and column for the ASCII ROM
-    always@(*) begin    
+    // assign row and column for ASCII ROM
+    always @(*) begin    
         if(y >= 152 && y < 248) begin
             char_row = y-200;
-        end    
-        else begin
+        end else begin
             char_row = 0;
        end
     end
+    assign bit_addr = x[2:0];
     
-    assign bit_addr = x[2:0]; // Column of ASCII ROM (lower 3 bits of x-coordinate)
-    reg [27:0] prevCheck;
-    reg [13:0] lettersRight;
-    initial prevCheck = 0;
-    initial lettersRight = 0;
-    initial lvl_won = 0;
-    
+    // start of the USER input matching logic 
     wire ascii_B, ascii_U, ascii_Space, ascii_E1, ascii_N1, ascii_G1, ascii_I1, ascii_N2, ascii_E2, ascii_E3, ascii_R, ascii_I2, ascii_N3, ascii_G2;
+    
+    // initialize everything as 0 at start of level
+    reg [27:0] prevCheck; // to keep track of letters to display
+    reg [13:0] lettersRight; // to keep track of user input corresponding to expected
+    initial begin
+        prevCheck = 0;
+        lettersRight = 0;
+        lvl_won = 0; // false     
+    end
 
-    // Determine if the current pixel should display an "on" bit from the ROM
+    // assign constraints for letters
     assign ascii_bit_on1 = ((x >= 295 && x < 352) && (y >= 152 && y < 168)) ? ascii_bit : 1'b0;
     assign ascii_bit_on2 = ((x >= 280 && x < 392) && (y >= 216 && y < 232)) ? ascii_bit : 1'b0;
-    
     assign ascii_B = ((x >= 280 && x < 288) && (y >= 232 && y < 248)) ? ascii_bit : 1'b0;
     assign ascii_U = ((x >= 288 && x < 296) && (y >= 232 && y < 248)) ? ascii_bit : 1'b0;
     assign ascii_Space = ((x >= 296 && x < 304) && (y >= 232 && y < 248)) ? ascii_bit : 1'b0;
@@ -115,12 +117,10 @@ module level_2_display(
     assign ascii_N3 = ((x >= 376 && x < 384) && (y >= 232 && y < 248)) ? ascii_bit : 1'b0;
     assign ascii_G2 = ((x >= 384 && x < 392) && (y >= 232 && y < 248)) ? ascii_bit : 1'b0;
 
-    // Logic to assign RGB values
+    // RGB logic
     always @(posedge clk) begin
         if(counter == 15 && lettersRight == 14'b11111111111111)
             lvl_won <= 1;
-        else
-            lvl_won <= 0;
             
         if(reset) begin
             prevCheck = 10'b0;
@@ -129,16 +129,17 @@ module level_2_display(
         if(reset) begin
             prevCheck = 28'b0;
         end
-        if (~video_on)  // If not in the display region
-            rgb = 12'h000; // Black (background off)
-        else if (ascii_bit_on1 || ascii_bit_on2) // If the ASCII bit is on
-            rgb = 12'h000; // Black (character pixels)
+        
+        if (~video_on)
+            rgb = 12'h000; // black
+        else if (ascii_bit_on1 || ascii_bit_on2)
+            rgb = 12'h000; // black
         else if ((ascii_B && counter == 1 && letter == "B") || (ascii_B && prevCheck[0] == 1)) begin
-            rgb = 12'h0F0;
+            rgb = 12'h0F0; // green
             prevCheck[0] <= 1;
             lettersRight[0] = 1;
         end else if ((ascii_B && counter == 1 && letter != "B") || (ascii_B && prevCheck[1] == 1)) begin
-            rgb = 12'hF00;
+            rgb = 12'hF00; // red
             prevCheck[1] <= 1;
         end else if ((ascii_U && counter == 2 && letter == "U") || (ascii_U && prevCheck[2] == 1)) begin
             rgb = 12'h0F0;
@@ -232,6 +233,7 @@ module level_2_display(
             rgb = 12'hF00;
             prevCheck[27] <= 1;
         end else
-            rgb = 12'hFFF; // White background
+            rgb = 12'hFFF; // white
     end
+    
 endmodule
