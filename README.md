@@ -113,5 +113,5 @@ Instantiate the debouncer three times and use the output for checking the posEdg
 
    
 
-**References:**   
+**5. References:**   
 [https://github.com/FPGADude/Digital-Design/tree/main/FPGA%20Projects/VGA%20Projects/VGA%20Text%20Generation](https://github.com/FPGADude/Digital-Design/tree/main/FPGA%20Projects/VGA%20Projects/VGA%20Text%20Generation) 
