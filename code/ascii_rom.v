@@ -13,7 +13,7 @@ module ascii_rom(
 	output reg [7:0] data // corresponding ROM data
 	);
     
-	(* rom_style = "block" *)	// infer BRAM
+	(* rom_style = "block" *)
 	
 	reg [10:0] addr_reg;
 	always @(posedge clk)
