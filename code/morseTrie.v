@@ -6,9 +6,7 @@ module morseTrie(
     output reg newLetter
     );
 
-    reg [7:0] currLetter;
-    
-    // call debouncer for buttons
+    // initialize debouncers for buttons
     wire cleanDot, cleanDash, cleanDone;
     wire posEdgeDot, posEdgeDash, posEdgeDone;
     
@@ -16,7 +14,8 @@ module morseTrie(
     debouncer DEB2(clk, reset, dash, cleanDash, posEdgeDash);
     debouncer DEB3(clk, reset, done, cleanDone, posEdgeDone);
     
-    
+    // trie
+    reg [7:0] currLetter;
     initial begin
         currLetter <= " ";
         morseLetter <= 8'b0;
@@ -27,12 +26,12 @@ module morseTrie(
             currLetter <= " ";
             morseLetter <= 8'b0;
         end
+        
         else if (posEdgeDone) begin
             morseLetter = currLetter;
             currLetter = " ";
             newLetter <= 1;
-        end
-        else if (posEdgeDash) begin
+        end else if (posEdgeDash) begin
             case(currLetter)
                 " ": currLetter <= "T";
                 "E": currLetter <= "A";
@@ -49,8 +48,7 @@ module morseTrie(
                 "M": currLetter <= "O";
                 "G": currLetter <= "Q";
             endcase
-        end 
-        else if( posEdgeDot) begin
+        end else if( posEdgeDot) begin
             case(currLetter)
                 " ": currLetter <= "E";
                 "E": currLetter <= "I";
@@ -67,9 +65,9 @@ module morseTrie(
                 "M": currLetter <= "G";
                 "G": currLetter <= "Z";
             endcase
-        end
-        else begin
+        end else begin
             newLetter <= 0;
         end
     end
+    
 endmodule
