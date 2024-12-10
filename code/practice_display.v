@@ -10,20 +10,21 @@ module practice_display(
     );
     
     // declare variables
-    wire [10:0] rom_addr;
-    reg [6:0] ascii_char;
-    wire [3:0] char_row; // 4 bits bc row in range from index 0 to f/15
-    wire [2:0] bit_addr; // 3 bits bc column in range from index 0 to 7
-    wire [7:0] rom_data;
-    wire ascii_bit, ascii_bit_on;
+    wire [10:0] rom_addr; // ASCII value + row
+    reg [6:0] ascii_char; // ASCII value (7 bit)
+    wire [3:0] char_row; // row of ASCII char in ROM
+    wire [2:0] bit_addr; // column of ASCII char in ROM
+    wire [7:0] rom_data; // data from the ROM
+    wire ascii_bit; // actual bit from ROM data
+    wire ascii_bit_on; // display bit or not
     wire [7:0] this_letter = letter;
     
     // instantiate ASCII ROM
     ascii_rom rom(clk, rom_addr, rom_data);
       
-    // ASCII ROM interface
-    assign rom_addr = {ascii_char, char_row};   // ROM address is ascii code + row
-    assign ascii_bit = rom_data[~bit_addr];     // reverse bit order
+    // assign the address to ROM (ASCII value + row)
+    assign rom_addr = {ascii_char, char_row};
+    assign ascii_bit = rom_data[~bit_addr]; // reverse bit order for the character
 
     // ASCII mapping
     always @* begin
@@ -62,19 +63,21 @@ module practice_display(
         end
     end
     
+    // assign row and column for ASCII ROM
     assign char_row = y[3:0]; // row of ASCII ROM
     assign bit_addr = x[2:0]; // column of ASCII ROM
     
-    // if within "on" region in center of screen and ASCII bit from ROM is a 1
+    // determine if the current pixel should display an "on" bit from the ROM
     assign ascii_bit_on = ((x >= 320 && x < 328) && (y >= 208 && y < 224)) ? ascii_bit : 1'b0;
     
-    // rgb logic to turn pixels ON
-    always @*
-        if(~video_on) // if not in display, don't turn on
-            rgb = 12'h000;
+    // RGB logic
+    always @(posedge clk) begin
+        if (~video_on)
+            rgb = 12'h000; // black
+        else if (ascii_bit_on)
+            rgb = 12'h000; // black
         else
-            if(ascii_bit_on)
-                rgb = 12'h000; // black letters
-            else
-                rgb = 12'hFFF; // white background
+            rgb = 12'hFFF; // white
+    end
+    
 endmodule
