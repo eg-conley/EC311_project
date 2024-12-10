@@ -209,8 +209,6 @@ module level_3_display(
     always @(posedge clk) begin
         if(counter == 44 && lettersRight == 43'b1111111111111111111111111111111111111111111)
             lvl_won <= 1;
-        else
-            lvl_won <= 0;
             
         if(reset) begin
             prevCheck = 10'b0;
