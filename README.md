@@ -1,4 +1,4 @@
-# Morse Code Escape Game
+# Morse Code Escape Game🕹️
 **EC311 Group 4: Ella Conley, Siara Patel, Tyler Nguyen, Nathan Strahs**
 
 This README provides an in-depth explanation of the provided verilog modules and how they interact together. The vga controller and vga rom were adapted from a github repository from FPGADude. 
