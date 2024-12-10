@@ -2,34 +2,34 @@
 // created directly from https://github.com/FPGADude/Digital-Design/tree/main/FPGA%20Projects/VGA%20Projects/VGA%20Text%20Generation
 
 module vga_controller(
-    input clk_100MHz,   // from Basys 3
-    input reset,        // system reset
-    output video_on,    // ON while pixel counts for x and y and within display area
-    output hsync,       // horizontal sync
-    output vsync,       // vertical sync
-    output clk_25MHz,      // the 25MHz pixel/second rate signal, pixel tick
-    output [9:0] x,     // pixel count/position of pixel x, max 0-799
-    output [9:0] y      // pixel count/position of pixel y, max 0-524
+    input clk_100MHz,
+    input reset,
+    output video_on,
+    output hsync,
+    output vsync, 
+    output clk_25MHz, // 25 MHz clock with divider
+    output [9:0] x, // pixel count/position of pixel x (0-799)
+    output [9:0] y // pixel count/position of pixel y (0-524)
     );
     
     // Based on VGA standards found at vesa.org for 640x480 resolution
-    // Total horizontal width of screen = 800 pixels, partitioned  into sections
-    parameter HD = 640;             // horizontal display area width in pixels
-    parameter HF = 48;              // horizontal front porch width in pixels
-    parameter HB = 16;              // horizontal back porch width in pixels
-    parameter HR = 96;              // horizontal retrace width in pixels
+    // total horizontal width of screen = 800 pixels
+    parameter HD = 640; // horizontal display area witdh
+    parameter HF = 48; // horizontal front porch width
+    parameter HB = 16; // horizontal back porch width
+    parameter HR = 96; // horizontal retrace width
     parameter HMAX = HD+HF+HB+HR-1; // max value of horizontal counter = 799
-    // Total vertical length of screen = 525 pixels, partitioned into sections
-    parameter VD = 480;             // vertical display area length in pixels 
-    parameter VF = 10;              // vertical front porch length in pixels  
-    parameter VB = 33;              // vertical back porch length in pixels   
-    parameter VR = 2;               // vertical retrace length in pixels  
+    
+    // total vertical length of screen = 525 pixels
+    parameter VD = 480; // vertical display area length
+    parameter VF = 10; // vertical front porch length
+    parameter VB = 33; // vertical back porch length
+    parameter VR = 2; // vertical retrace length
     parameter VMAX = VD+VF+VB+VR-1; // max value of vertical counter = 524   
     
-    // *** Generate 25MHz from 100MHz *********************************************************
+    // clock divider from 100 MHz to 25 MHz
 	reg  [1:0] r_25MHz;
 	wire w_25MHz;
-	
 	always @(posedge clk_100MHz or posedge reset) begin
 		if(reset)
 		  r_25MHz <= 0;
@@ -37,48 +37,45 @@ module vga_controller(
 		  r_25MHz <= r_25MHz + 1;
 	end 
 	assign w_25MHz = (r_25MHz == 0) ? 1 : 0; // assert tick 1/4 of the time
-    // ****************************************************************************************
     
-    // Counter Registers, two each for buffering to avoid glitches
+    // counter registers and output buffers
     reg [9:0] h_count_reg, h_count_next;
     reg [9:0] v_count_reg, v_count_next;
-    
-    // Output Buffers
     reg v_sync_reg, h_sync_reg;
     wire v_sync_next, h_sync_next;
     
-    // Register Control
-    always @(posedge clk_100MHz or posedge reset)
+    // register Control
+    always @(posedge clk_100MHz or posedge reset) begin
         if(reset) begin
             v_count_reg <= 0;
             h_count_reg <= 0;
             v_sync_reg  <= 1'b0;
             h_sync_reg  <= 1'b0;
-        end
-        else begin
+        end else begin
             v_count_reg <= v_count_next;
             h_count_reg <= h_count_next;
             v_sync_reg  <= v_sync_next;
             h_sync_reg  <= h_sync_next;
         end
+    end
          
-    //Logic for horizontal counter
-    always @(posedge w_25MHz or posedge reset)      // pixel tick
+    // horizontal counter/scan
+    always @(posedge w_25MHz or posedge reset)
         if(reset)
             h_count_next = 0;
         else
-            if(h_count_reg == HMAX)                 // end of horizontal scan
+            if(h_count_reg == HMAX)
                 h_count_next = 0;
             else
                 h_count_next = h_count_reg + 1;         
   
-    // Logic for vertical counter
+    // vertical counter/scan
     always @(posedge w_25MHz or posedge reset)
         if(reset)
             v_count_next = 0;
         else
-            if(h_count_reg == HMAX)                 // end of horizontal scan
-                if((v_count_reg == VMAX))           // end of vertical scan
+            if(h_count_reg == HMAX)
+                if((v_count_reg == VMAX))
                     v_count_next = 0;
                 else
                     v_count_next = v_count_reg + 1;
@@ -89,10 +86,10 @@ module vga_controller(
     // v_sync_next asserted within the vertical retrace area
     assign v_sync_next = (v_count_reg >= (VD+VB) && v_count_reg <= (VD+VB+VR-1));
     
-    // Video ON/OFF - only ON while pixel counts are within the display area
+    // video ON/OFF (ON while pixel counts are within the display area)
     assign video_on = (h_count_reg < HD) && (v_count_reg < VD); // 0-639 and 0-479 respectively
             
-    // Outputs
+    // outputs
     assign hsync = h_sync_reg;
     assign vsync = v_sync_reg;
     assign x = h_count_reg;
