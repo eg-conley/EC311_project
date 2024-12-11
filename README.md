@@ -1,7 +1,5 @@
 # Morse Code Escape Game🕹️
-**EC311**   
-**Morse Code Escape Game**   
-**Group 4: Ella Conley, Siara Patel, Tyler Nguyen, Nathan Strahs**
+**EC311 Group 4: Ella Conley, Siara Patel, Tyler Nguyen, Nathan Strahs**
 
 This README provides an in-depth explanation of the provided verilog modules and how they interact together. The vga controller and vga rom were adapted from a github repository from FPGADude. 
 
@@ -82,7 +80,7 @@ This README provides an in-depth explanation of the provided verilog modules and
   - Three debouncer modules.   
     - Outputs posedge and high button.   
     - Posedge is only on for one clock cycle.   
--   
+  
 - ascii\_test.v   
   - Letter stores the user input morse code and converts it into the equivalent ascii character (ascii\_char).
 
@@ -119,6 +117,7 @@ Instantiate the debouncer three times and use the output for checking the posEdg
    Maps the pixels for 26 letters.
 
 **Final Block Diagram:** 
+![alt text](/Final_BlockDiagram.jpg)
 
 
 **References:**   
