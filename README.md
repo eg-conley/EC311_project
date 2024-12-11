@@ -4,6 +4,7 @@
 This README provides an in-depth explanation of the provided verilog modules and how they interact together. The vga controller and vga rom were adapted from a github repository from FPGADude. 
 
 **Link to Project Demo Video:** 
+https://www.youtube.com/watch?v=uQqC6ffjwro
 
 **Table of Contents:** 
 
