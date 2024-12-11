@@ -112,7 +112,7 @@ Maps the pixels for 26 letters.
 
 Final Block Diagram: 
 
-![alt text] (//Users/siarapatel/Downloads/IMG_2374.jpg)
+![alt text](/Users/siarapatel/Downloads/IMG_2374.jpg)
 
 References: 
 https://github.com/FPGADude/Digital-Design/tree/main/FPGA%20Projects/VGA%20Projects/VGA%20Text%20Generation 
